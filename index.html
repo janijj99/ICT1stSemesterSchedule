@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Schedule with Date</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background-color: #f4f7f6;
+    }
+    h1 {
+      color: #34495e;
+    }
+    #date-info {
+        font-size: 18px;
+        color: #555;
+        margin-bottom: 20px;
+    }
+    #schedule {
+      font-size: 20px;
+      color: #2c3e50;
+      margin-top: 20px;
+      padding: 15px;
+      border: 1px solid #bdc3c7;
+      display: inline-block;
+      border-radius: 8px;
+      background-color: #ffffff;
+      text-align: left;
+      min-width: 300px; 
+    }
+    .class-item {
+      margin-bottom: 5px;
+      padding-left: 10px;
+      border-left: 3px solid #3498db;
+    }
+    .time {
+        font-weight: bold; /* Keeping the time bold for readability */
+        color: #2c3e50;
+    }
+    .day-name { /* New class for the day name */
+        font-weight: bold;
+        color: #34495e;
+    }
+    .no-class {
+      color: #e74c3c;
+      font-weight: bold;
+      border-left: none;
+    }
+    .donation {
+      margin-top: 30px;
+      text-align: center;
+    }
+    .qr-img {
+      width: 150px;
+      height: 150px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
+    .donation p {
+      font-size: 16px;
+      color: #27ae60;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>📅 Today's ICT 1st Semester Schedule</h1>
+  <p id="date-info"></p>
+  <div id="schedule"></div>
+
+         <!-- Donation Section -->
+  <div class="donation">
+    <img src="GooglePay_QR_1.png" alt="Donate QR" class="qr-img" />
+    <p>Support by Donation ❤️</p>
+  </div>
+
+  <script>
+    // Get today's date and day
+    const today = new Date();
+    // Setting the date to Tuesday, 7th October 2025 for your current check
+    // NOTE: In a real environment, you would remove the following three lines to use the current system time.
+    today.setDate(7); 
+    today.setMonth(9); // October (0 is January)
+    today.setFullYear(2025);
+    // Setting the day explicitly to Tuesday (2) for this check.
+    today.setDate(today.getDate() - today.getDay() + 2); // Sets to Tuesday of the current week based on date logic
+
+    const date = today.getDate();
+    const month = today.getMonth() + 1; // Months start from 0
+    const year = today.getFullYear();
+
+    const dayNumber = today.getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
+    let day;
+
+    // Convert day number to day name
+    switch(dayNumber) {
+      case 0: day = "Sunday"; break;
+      case 1: day = "Monday"; break;
+      case 2: day = "Tuesday"; break;
+      case 3: day = "Wednesday"; break;
+      case 4: day = "Thursday"; break;
+      case 5: day = "Friday"; break;
+      case 6: day = "Saturday"; break;
+      default: day = "Unknown";
+    }
+
+    // --- CORRECTION APPLIED HERE ---
+    // Display day and date. Now using <span class='day-name'> to bold the day without **
+    document.getElementById("date-info").innerHTML =
+      "Today is <span class='day-name'>" + day + "</span> | Date: " + date + "/" + month + "/" + year;
+
+    // --- Time Table Data from the Image ---
+    const timeTable = {
+      "Monday": [
+        ["10:30-11:30", "FOE-YDR"],
+        ["11:30-12:30", "B1-FICT(T)-PKV-202 / B2-FICT(T)-BPR-202"],
+        ["12:30-1:30", "MODERN PHYSICS"],
+        ["1:30-3:00", "ICT-1 PHYSICS / ICT-2 CS"],
+        ["3:00-4:00", "ICT-1 PHYSICS / ICT-2 CS"],
+        ["4:10-5:10", "B1-FOE-YDR-201 / B2-WDP-JVD-202"],
+        ["5:10-6:10", "B1-FOE-YDR-201 / B2-WDP-JVD-202"]
+      ],
+      "Tuesday": [
+        ["10:30-11:30", "FOE-YDR"],
+        ["11:30-12:30", "MATHS-1"],
+        ["12:30-1:30", "MODERN PHYSICS"],
+        ["1:30-3:00", "ICT-2 PHYSICS / ICT-1 CS"],
+        ["3:00-4:00", "ICT-2 PHYSICS / ICT-1 CS"],
+        ["4:10-5:10", "B1-FOE-YDR-201 / B2-FOE-YDR-201"],
+        ["5:10-6:10", "B2-FOE-YDR-201"]
+      ],
+      "Wednesday": [
+        ["10:30-11:30", "CS"],
+        ["11:30-12:30", "B1-WDP(T)-PKV-202 / B2-WDP(T)-JVD-202"],
+        ["12:30-1:30", "MATHS-1"],
+        ["1:30-3:00", "MODERN PHYSICS"],
+        ["3:00-4:00", "B1-FICT / B2-FOE"], 
+        ["4:10-5:10", "B2-MATHS-TUT"],
+        ["5:10-6:10", "B2-MATHS-TUT"]
+      ],
+      "Thursday": [
+        ["10:30-11:30", "B2-WDP-JVD-202"],
+        ["11:30-12:30", "B2-WDP-JVD-202"],
+        ["12:30-1:30", "MATHS-1"],
+        ["1:30-3:00", "B1-FICT / B2-FOE"],
+        ["3:00-4:00", "B2-FICT-BP / B-202"],
+        ["4:10-5:10", "B1-WDP-PKV-202"],
+        ["5:10-6:10", "B1-WDP-PKV-202"]
+      ],
+      "Friday": [
+        ["10:30-11:30", "CS"],
+        ["11:30-12:30", "B1-PKV-202"],
+        ["12:30-1:30", "B2-FICT-BP / B-202"],
+        ["1:30-3:00", "B1-FICT-PKV-202"],
+        ["3:00-4:00", "B1-WDP-PKV-202"],
+        ["4:10-5:10", "SPORT & YOGA-VM / H"],
+        ["5:10-6:10", "SPORT & YOGA-VM / H"]
+      ],
+      "Saturday": [
+        ["10:30-11:30", "B1-WDP-JVD-202"],
+        ["11:30-12:30", "B1-WDP-JVD-202"],
+        ["12:30-1:30", "B1-WDP-JVD-202"],
+        ["1:30-3:00", "B1-WDP-JVD-202"],
+        ["3:00-4:00", "B1-WDP-JVD-202"],
+        ["4:10-5:10", "SPORT & YOGA-VM / H"],
+        ["5:10-6:10", "SPORT & YOGA-VM / H"]
+      ]
+    };
+
+    // Assign schedule based on the day
+    let dailyClasses = timeTable[day];
+    let scheduleHTML = "<h3>Classes:</h3>";
+
+    if (day === "Sunday" || !dailyClasses) {
+      scheduleHTML += "<div class='no-class'>No classes today – Enjoy your day! 😎</div>";
+    } else {
+      dailyClasses.forEach(classData => {
+        const time = classData[0];
+        const subject = classData[1];
+        scheduleHTML += `<div class="class-item"><span class="time">${time}</span>: ${subject}</div>`;
+      });
+    }
+
+    // Display the schedule
+    document.getElementById("schedule").innerHTML = scheduleHTML;
+  </script>
+
+</body>
+</html>
