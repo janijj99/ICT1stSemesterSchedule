@@ -37,10 +37,10 @@
       border-left: 3px solid #3498db;
     }
     .time {
-        font-weight: bold; /* Keeping the time bold for readability */
+        font-weight: bold;
         color: #2c3e50;
     }
-    .day-name { /* New class for the day name */
+    .day-name {
         font-weight: bold;
         color: #34495e;
     }
@@ -65,7 +65,6 @@
       margin-top: 10px;
       font-weight: bold;
     }
-
   </style>
 </head>
 <body>
@@ -74,25 +73,19 @@
   <p id="date-info"></p>
   <div id="schedule"></div>
 
-         <!-- Donation Section -->
+  <!-- Donation Section -->
   <div class="donation">
     <img src="GooglePay_QR_1.png" alt="Donate QR" class="qr-img" />
     <p>Support by Donation ❤️</p>
   </div>
 
   <script>
-    // Get today's date and day
+    // 🕒 Get today's actual system date
     const today = new Date();
-    // Setting the date to Tuesday, 7th October 2025 for your current check
-    // NOTE: In a real environment, you would remove the following three lines to use the current system time.
-    today.setDate(7); 
-    today.setMonth(9); // October (0 is January)
-    today.setFullYear(2025);
-    // Setting the day explicitly to Tuesday (2) for this check.
-    today.setDate(today.getDate() - today.getDay() + 2); // Sets to Tuesday of the current week based on date logic
 
+    // Extract date info
     const date = today.getDate();
-    const month = today.getMonth() + 1; // Months start from 0
+    const month = today.getMonth() + 1; // 0 = January
     const year = today.getFullYear();
 
     const dayNumber = today.getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
@@ -110,12 +103,11 @@
       default: day = "Unknown";
     }
 
-    // --- CORRECTION APPLIED HERE ---
-    // Display day and date. Now using <span class='day-name'> to bold the day without **
+    // Show today's date & day
     document.getElementById("date-info").innerHTML =
       "Today is <span class='day-name'>" + day + "</span> | Date: " + date + "/" + month + "/" + year;
 
-    // --- Time Table Data from the Image ---
+    // 📚 Time Table Data
     const timeTable = {
       "Monday": [
         ["10:30-11:30", "FOE-YDR"],
@@ -173,7 +165,7 @@
       ]
     };
 
-    // Assign schedule based on the day
+    // 🗓 Display today's schedule
     let dailyClasses = timeTable[day];
     let scheduleHTML = "<h3>Classes:</h3>";
 
@@ -187,10 +179,9 @@
       });
     }
 
-    // Display the schedule
+    // Show the schedule
     document.getElementById("schedule").innerHTML = scheduleHTML;
   </script>
 
 </body>
-
 </html>
