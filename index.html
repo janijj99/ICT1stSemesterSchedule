@@ -1,189 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daily Schedule with Date</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-      background-color: #f4f7f6;
-    }
-    h1 {
-      color: #34495e;
-    }
-    #date-info {
-        font-size: 18px;
-        color: #555;
-        margin-bottom: 20px;
-    }
-    #schedule {
-      font-size: 20px;
-      color: #2c3e50;
-      margin-top: 20px;
-      padding: 15px;
-      border: 1px solid #bdc3c7;
-      display: inline-block;
-      border-radius: 8px;
-      background-color: #ffffff;
-      text-align: left;
-      min-width: 300px; 
-    }
-    .class-item {
-      margin-bottom: 5px;
-      padding-left: 10px;
-      border-left: 3px solid #3498db;
-    }
-    .time {
-        font-weight: bold;
-        color: #2c3e50;
-    }
-    .day-name {
-        font-weight: bold;
-        color: #34495e;
-    }
-    .no-class {
-      color: #e74c3c;
-      font-weight: bold;
-      border-left: none;
-    }
-    .donation {
-      margin-top: 30px;
-      text-align: center;
-    }
-    .qr-img {
-      width: 150px;
-      height: 150px;
-      border: 2px solid #ccc;
-      border-radius: 10px;
-    }
-    .donation p {
-      font-size: 16px;
-      color: #27ae60;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICT 2nd Semester Schedule</title>
+
+    <style>
+        body {
+            font-family: Segoe UI, Arial, sans-serif;
+            text-align: center;
+            margin-top: 40px;
+            background: #000;
+            color: white;
+        }
+
+        /* Background Blur */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("wp.png.jpg");
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px);
+            z-index: -2;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: -1;
+        }
+
+        /* Heading */
+        h1 {
+            font-size: 38px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* Date */
+        #date-info {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        /* Glass Card */
+        #schedule {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            padding: 20px;
+            border-radius: 16px;
+            display: inline-block;
+            min-width: 360px;
+        }
+
+        /* Table Style */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 10px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        tr:hover td {
+            background: rgba(0, 255, 255, 0.15);
+        }
+
+        .time {
+            color: #00ffff;
+            font-weight: bold;
+        }
+
+        .no-class {
+            color: #ff4d4d;
+            font-weight: bold;
+        }
+    </style>
 </head>
+
 <body>
 
-  <h1>Today's ICT 1st Semester Schedule</h1>
-  <p id="date-info"></p>
-  <div id="schedule"></div>
-      <!-- Donation Section -->
-  <div class="donation">
-    <img src="lol.png" alt="Donate QR" class="qr-img" />
-    
-  </div>
- 
+    <h1>ICT 2nd Semester – Today's Schedule</h1>
+    <p id="date-info"></p>
+    <div id="schedule"></div>
 
-  <script>
-    // 🕒 Get today's actual system date
-    const today = new Date();
+    <script>
 
-    // Extract date info
-    const date = today.getDate();
-    const month = today.getMonth() + 1; // 0 = January
-    const year = today.getFullYear();
+        const today = new Date();
+        const date = today.getDate();
+        const month = today.getMonth() + 1;
+        const year = today.getFullYear();
+        const day = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][today.getDay()];
 
-    const dayNumber = today.getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
-    let day;
+        document.getElementById("date-info").innerHTML =
+            "Today is <b>" + day + "</b> | " + date + "/" + month + "/" + year;
 
-    // Convert day number to day name
-    switch(dayNumber) {
-      case 0: day = "Sunday"; break;
-      case 1: day = "Monday"; break;
-      case 2: day = "Tuesday"; break;
-      case 3: day = "Wednesday"; break;
-      case 4: day = "Thursday"; break;
-      case 5: day = "Friday"; break;
-      case 6: day = "Saturday"; break;
-      default: day = "Unknown";
-    }
+        const timeTable = {
+            "Monday": [["10:30-11:30", "Python-PKV"], ["11:30-12:30", "Engineering Chemistry"], ["12:30-1:30", "CPD"], ["2:00-3:00", "ICT-1 (CPD)"], ["3:00-4:00", "ICT-2 (Chem)"], ["4:10-5:10", "IC"], ["5:10-6:10", "ICT-2 (CPD)"]],
+            "Tuesday": [["10:30-11:30", "CPD"], ["11:30-12:30", "Engineering Chemistry"], ["12:30-1:30", "Python-PKV"], ["2:00-3:00", "ICT-1 Python Lab"], ["3:00-4:00", "ICT-2 PCB Lab"], ["4:10-5:10", "ICT-1 (Chem)"], ["5:10-6:10", "ICT-2 Maths Tutorial"]],
+            "Wednesday": [["10:30-11:30", "Python-PKV"], ["11:30-12:30", "ENVI-PKV"], ["12:30-1:30", "Applied Maths"], ["2:00-3:00", "ICT-1 PCB Lab"], ["3:00-4:00", "ICT-2 Python Lab"], ["4:10-5:10", "ICT-1 Maths Tutorial"], ["5:10-6:10", "No Class"]],
+            "Thursday": [["10:30-11:30", "No Class"], ["11:30-12:30", "Engineering Chemistry"], ["12:30-1:30", "Applied Maths"], ["2:00-3:00", "ICT-1 PCB Lab"], ["3:00-4:00", "ICT-2 PCB Lab"], ["4:10-5:10", "IC"], ["5:10-6:10", "No Class"]],
+            "Friday": [["10:30-11:30", "No Class"], ["11:30-12:30", "Applied Maths"], ["12:30-1:30", "ENVI-PKV"], ["2:00-3:00", "ICT-1 PCB Lab"], ["3:00-4:00", "ICT-2 PCB Lab"], ["4:10-5:10", "No Class"], ["5:10-6:10", "No Class"]],
+            "Saturday": [["10:30-11:30", "No Class"], ["11:30-12:30", "No Class"], ["12:30-1:30", "No Class"], ["2:00-3:00", "No Class"], ["3:00-4:00", "No Class"], ["4:10-5:10", "No Class"], ["5:10-6:10", "No Class"]]
+        };
 
-    // Show today's date & day
-    document.getElementById("date-info").innerHTML =
-      "Today is <span class='day-name'>" + day + "</span> | Date: " + date + "/" + month + "/" + year;
+        let dailyClasses = timeTable[day];
+        let html = "<h3>Today's Classes</h3>";
 
-    // 📚 Time Table Data
-    const timeTable = {
-      "Monday": [
-        ["10:30-11:30", "FOE-YDR"],
-        ["11:30-12:30", "B1-FICT(T)-PKV-202 / B2-FICT(T)-BPR-202"],
-        ["12:30-1:30", "MODERN PHYSICS"],
-        ["1:30-3:00", "ICT-1 PHYSICS / ICT-2 CS"],
-        ["3:00-4:00", "ICT-1 PHYSICS / ICT-2 CS"],
-        ["4:10-5:10", "B1-FOE-YDR-201 / B2-WDP-JVD-202"],
-        ["5:10-6:10", "B1-FOE-YDR-201 / B2-WDP-JVD-202"]
-      ],
-      "Tuesday": [
-        ["10:30-11:30", "FOE-YDR"],
-        ["11:30-12:30", "MATHS-1"],
-        ["12:30-1:30", "MODERN PHYSICS"],
-        ["1:30-3:00", "ICT-2 PHYSICS / ICT-1 CS"],
-        ["3:00-4:00", "ICT-2 PHYSICS / ICT-1 CS"],
-        ["4:10-5:10", "B1-FOE-YDR-201 / B2-FOE-YDR-201"],
-        ["5:10-6:10", "B2-FOE-YDR-201"]
-      ],
-      "Wednesday": [
-        ["10:30-11:30", "CS"],
-        ["11:30-12:30", "B1-WDP(T)-PKV-202 / B2-WDP(T)-JVD-202"],
-        ["12:30-1:30", "MATHS-1"],
-        ["1:30-3:00", "MODERN PHYSICS"],
-        ["3:00-4:00", "B1-FICT / B2-FOE"], 
-        ["4:10-5:10", "B2-MATHS-TUT"],
-        ["5:10-6:10", "B2-MATHS-TUT"]
-      ],
-      "Thursday": [
-        ["10:30-11:30", "B2-WDP-JVD-202"],
-        ["11:30-12:30", "B2-WDP-JVD-202"],
-        ["12:30-1:30", "MATHS-1"],
-        ["1:30-3:00", "B1-FICT / B2-FOE"],
-        ["3:00-4:00", "B2-FICT-BP / B-202"],
-        ["4:10-5:10", "B1-WDP-PKV-202"],
-        ["5:10-6:10", "B1-WDP-PKV-202"]
-      ],
-      "Friday": [
-        ["10:30-11:30", "CS"],
-        ["11:30-12:30", "B1-PKV-202"],
-        ["12:30-1:30", "B2-FICT-BP / B-202"],
-        ["1:30-3:00", "B1-FICT-PKV-202"],
-        ["3:00-4:00", "B1-WDP-PKV-202"],
-        ["4:10-5:10", "SPORT & YOGA-VM / H"],
-        ["5:10-6:10", "SPORT & YOGA-VM / H"]
-      ],
-      "Saturday": [
-        ["10:30-11:30", "B1-WDP-JVD-202"],
-        ["11:30-12:30", "B1-WDP-JVD-202"],
-        ["12:30-1:30", "B1-WDP-JVD-202"],
-        ["1:30-3:00", "B1-WDP-JVD-202"],
-        ["3:00-4:00", "B1-WDP-JVD-202"],
-        ["4:10-5:10", "SPORT & YOGA-VM / H"],
-        ["5:10-6:10", "SPORT & YOGA-VM / H"]
-      ]
-    };
+        if (day === "Sunday" || !dailyClasses) {
+            html += "<div class='no-class'>No classes today 😎</div>";
+        } else {
+            html += "<table>";
+            html += "<tr><th>Time</th><th>Subject</th></tr>";
+            dailyClasses.forEach(c => {
+                html += `<tr><td class="time">${c[0]}</td><td>${c[1]}</td></tr>`;
+            });
+            html += "</table>";
+        }
 
-    // 🗓 Display today's schedule
-    let dailyClasses = timeTable[day];
-    let scheduleHTML = "<h3>Classes:</h3>";
+        document.getElementById("schedule").innerHTML = html;
 
-    if (day === "Sunday" || !dailyClasses) {
-      scheduleHTML += "<div class='no-class'>No classes today – Enjoy your day! 😎</div>";
-    } else {
-      dailyClasses.forEach(classData => {
-        const time = classData[0];
-        const subject = classData[1];
-        scheduleHTML += `<div class="class-item"><span class="time">${time}</span>: ${subject}</div>`;
-      });
-    }
-
-    // Show the schedule
-    document.getElementById("schedule").innerHTML = scheduleHTML;
-  </script>
+    </script>
 
 </body>
+
 </html>
-
-
